@@ -71,9 +71,31 @@ export function RightSidebar({ hoveredColor, recentlyCopied, onClearRecent, onCo
   const rgb = hexToRgb(firstHex)
   const hsl = rgb ? rgbToHsl(rgb.r, rgb.g, rgb.b) : null
 
+  const getPreviewClassName = () => {
+    if (!hoveredColor) return ""
+    switch (hoveredColor.type) {
+      case "holographic":
+        return "holographic-box"
+      case "glowing":
+        return "glowing"
+      case "satin":
+        return "satin-box"
+      case "satinshine":
+        return "satin-shine-box"
+      case "metallic":
+        return "metallic-box"
+      case "glass":
+        return "glass-box"
+      case "gradient":
+        return "gradient-box"
+      default:
+        return ""
+    }
+  }
+
   return (
     <aside
-      className={`fixed right-0 top-16 bottom-0 w-56 bg-background border-l-2 holographic-box overflow-y-auto z-30 transition-transform duration-300 hidden xl:block`}
+      className={`fixed right-0 top-16 bottom-0 w-56 bg-background border-l-2 overflow-y-auto z-30 transition-transform duration-300 hidden xl:block`}
       style={{ borderImageSource: "linear-gradient(180deg, #ccffff, #eeffdd, #ffffcc, #ffddff)", borderImageSlice: 1 }}
     >
       <div className="p-3 space-y-4">
@@ -81,7 +103,7 @@ export function RightSidebar({ hoveredColor, recentlyCopied, onClearRecent, onCo
         <div>
           <h3 className="text-sm font-medium text-foreground mb-2">Color Preview</h3>
           <div
-            className="w-full h-24 rounded-lg border-2 holographic-box mb-2 transition-all duration-200"
+            className={`w-full h-24 rounded-lg border-2 mb-2 transition-all duration-200 ${getPreviewClassName()}`}
             style={{ background: previewColor, borderColor: "#ffccff" }}
           />
           {hoveredColor ? (
